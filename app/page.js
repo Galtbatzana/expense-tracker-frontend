@@ -50,6 +50,15 @@ export default function Home() {
   }
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
 
+  function editCategoryName () {
+
+  }
+
+  function deleteCategoryName () {
+
+  }
+
+  
   return (
     <main>
       <Button onClick={createNew}>Add new</Button>
@@ -57,8 +66,8 @@ export default function Home() {
       {categories.map((category) => (
         <div key={category.name}>
           {category.name}
-          <Button>Edit</Button>
-          <Button>delete</Button>
+          <Button onClick={}>Edit</Button>
+          <Button onClick={}>delete</Button>
           
         </div>
       ))}
