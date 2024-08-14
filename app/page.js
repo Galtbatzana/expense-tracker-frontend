@@ -1,10 +1,9 @@
 "use client";
 
-
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-
   // const [articles, setArticles] = useState([]);
 
   // useEffect(()=> {
@@ -13,8 +12,7 @@ export default function Home() {
   //   .then((data)=>{
   //     setArticles(data);
   //   });
-  // }, []); 
-
+  // }, []);
 
   // return (
   //   <main>
@@ -25,46 +23,45 @@ export default function Home() {
   //     }
   //   </main>
   // );
-////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
   const [categories, setCategories] = useState([]);
-  
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
     fetch("http://localhost:4000/categories/list")
-    .then((res)=>res.json())
-    .then((data)=>{
-      setCategories(data);
-    });
+      .then((res) => res.json())
+      .then((data) => {
+        setCategories(data);
+      });
   }
 
-  useEffect(()=> {
-   loadList();
+  useEffect(() => {
+    loadList();
   }, []);
 
-  function createNew(){
+  function createNew() {
     const name = prompt("Name...");
-    
+
     fetch(`http://localhost:4000/categories/create?name=${name}`)
-    .then((res)=>res.json())
-    .then(()=>{
-      loadList();
-    });
+      .then((res) => res.json())
+      .then(() => {
+        loadList();
+      });
   }
-//ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
+  //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
 
   return (
     <main>
-      <button onClick={createNew}>Add new</button>
-      {categories.map((category)=>(
-          <div key={category.name}>{category.name}
-            <button>edit</button>
-            <button>delete</button>
-          </div>
-        ))}
+      <Button onClick={createNew}>Add new</Button>
+
+      {categories.map((category) => (
+        <div key={category.name}>
+          {category.name}
+          <Button>Edit</Button>
+          <Button>delete</Button>
+          
+        </div>
+      ))}
     </main>
   );
-
 }
-
-
