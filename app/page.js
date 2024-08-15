@@ -23,7 +23,7 @@ export default function Home() {
   //     }
   //   </main>
   // );
-  ////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////
   const [categories, setCategories] = useState([]);
 
   //automataar render hiij bga function loadList geed ner ugchie
@@ -38,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     loadList();
   }, []);
-
+///////////////////////////////////////////////////////////////////////////
   function createNew() {
     const name = prompt("Name...");
 
@@ -49,16 +49,24 @@ export default function Home() {
       });
   }
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
-
+///////////////////////////////////////////////////////////////////////////
   function editCategoryName () {
+    fetch(`/categories/update?name=${name}`)
+    const {id, name} = req.query;
+    const index = categories.findIndex((cat)=>(cat.id===id));
+    categories[index].name = name;
+    fs.writeFileSync("categories.json", JSON.stringify(categories))
 
   }
 
   function deleteCategoryName () {
-
+    fetch(`http://localhost:4000/categories/delete?name=${id}`)
+    let { id } = req.query;
+    let categories = categories.filter((cat)=>(cat.id === id));
+    fs.writeFileSync("categories.json", JSON.stringify(categories));
   }
 
-  
+
   return (
     <main>
       <Button onClick={createNew}>Add new</Button>
@@ -66,8 +74,8 @@ export default function Home() {
       {categories.map((category) => (
         <div key={category.name}>
           {category.name}
-          <Button onClick={}>Edit</Button>
-          <Button onClick={}>delete</Button>
+          <Button onClick={editCategoryName}>Edit</Button>
+          <Button onClick={deleteCategoryName}>Del</Button>
           
         </div>
       ))}
