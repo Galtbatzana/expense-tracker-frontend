@@ -28,7 +28,7 @@ export default function Home() {
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
-    fetch("http://localhost:4000/categories/list")
+    fetch("http://localhost:4000/categories")
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
@@ -41,8 +41,12 @@ export default function Home() {
 ///////////////////////////////////////////////////////////////////////////
   function createNew() {
     const name = prompt("Name...");
-
-    fetch(`http://localhost:4000/categories/create?name=${name}`)
+    fetch(`http://localhost:4000/categories`,{
+      method: "POST",
+      body: JSON.stringify({ name: name }),
+      headers: { "Content-type": "application/json; charset=UTF-8",
+      },
+    })
       .then((res) => res.json())
       .then(() => {
         loadList();
@@ -50,20 +54,31 @@ export default function Home() {
   }
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
 ///////////////////////////////////////////////////////////////////////////
-  function editCategoryName () {
-    fetch(`/categories/update?name=${name}`)
-    const {id, name} = req.query;
-    const index = categories.findIndex((cat)=>(cat.id===id));
-    categories[index].name = name;
-    fs.writeFileSync("categories.json", JSON.stringify(categories))
-
+  function editCategoryName (id, oldName) {
+    const name = prompt("Are you sure?", oldName);
+    if (name) {
+      fetch(`http://localhost:4000/categories/${id}`,{
+        method: "PUT",
+        body: JSON.stringify({ name: name }),
+        headers: { "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((res) => res.json())
+        .then(() => {
+          loadList();
+        });
+    }
   }
-
-  function deleteCategoryName () {
-    fetch(`http://localhost:4000/categories/delete?name=${id}`)
-    let { id } = req.query;
-    let categories = categories.filter((cat)=>(cat.id === id));
-    fs.writeFileSync("categories.json", JSON.stringify(categories));
+/////////////////////////////////////////////////////////////////////////
+  function deleteCategoryName (id,oldName) {
+    if (confirm("are you sure?")) {
+      fetch(`http://localhost:4000/categories/${id}`,{
+        method: "DELETE",
+      })
+        .then(() => {
+          loadList();
+        });
+    }
   }
 
 
@@ -72,10 +87,10 @@ export default function Home() {
       <Button onClick={createNew}>Add new</Button>
 
       {categories.map((category) => (
-        <div key={category.name}>
+        <div key={category.id}>
           {category.name}
-          <Button onClick={editCategoryName}>Edit</Button>
-          <Button onClick={deleteCategoryName}>Del</Button>
+          <Button onClick={() => editCategoryName(category.id, category.name)}>Edit</Button>
+          <Button onClick={() => deleteCategoryName(category.id,category.name)}>Del</Button>
           
         </div>
       ))}
