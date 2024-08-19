@@ -75,7 +75,10 @@ export default function Home() {
       fetch(`http://localhost:4000/categories/${id}`,{
         method: "DELETE",
       })
-        .then(() => {
+        .then((res) => {
+          if (res.status === 404) {
+            alert("Category not found");
+          }
           loadList();
         });
     }
