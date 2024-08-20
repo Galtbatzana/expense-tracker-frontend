@@ -4,26 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  // const [articles, setArticles] = useState([]);
 
-  // useEffect(()=> {
-  //   fetch("http://localhost:4000/articles")
-  //   .then((res)=>res.json())
-  //   .then((data)=>{
-  //     setArticles(data);
-  //   });
-  // }, []);
-
-  // return (
-  //   <main>
-  //     {
-  //       articles.map((article)=>(
-  //         <div key={article.id}>{article.title}</div>
-  //       ))
-  //     }
-  //   </main>
-  // );
-  /////////////////////////////////////////////////////////////////////////
   const [categories, setCategories] = useState([]);
 
   //automataar render hiij bga function loadList geed ner ugchie
@@ -38,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     loadList();
   }, []);
-///////////////////////////////////////////////////////////////////////////
+////////////////CREATE////////////////////////////////////////////
   function createNew() {
     const name = prompt("Name...");
     fetch(`http://localhost:4000/categories`,{
@@ -53,7 +34,7 @@ export default function Home() {
       });
   }
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
-///////////////////////////////////////////////////////////////////////////
+/////////////////EDIT//////////////////////////////////////////////
   function editCategoryName (id, oldName) {
     const name = prompt("Are you sure?", oldName);
     if (name) {
@@ -69,7 +50,7 @@ export default function Home() {
         });
     }
   }
-/////////////////////////////////////////////////////////////////////////
+/////////DELETE/////////////////////////////////////////////
   function deleteCategoryName (id,oldName) {
     if (confirm("are you sure?")) {
       fetch(`http://localhost:4000/categories/${id}`,{
@@ -84,7 +65,7 @@ export default function Home() {
     }
   }
 
-
+////////////////////HTML///////////////////////////////////
   return (
     <main>
       <Button onClick={createNew}>Add new</Button>
