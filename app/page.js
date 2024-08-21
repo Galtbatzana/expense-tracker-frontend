@@ -44,7 +44,6 @@ export default function Home() {
         headers: { "Content-type": "application/json; charset=UTF-8",
         },
       })
-        .then((res) => res.json())
         .then(() => {
           loadList();
         });
