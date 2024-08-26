@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Hero } from "@/component/Hero/Hero";
+
 
 export default function Home() {
 
@@ -67,6 +69,7 @@ export default function Home() {
 ////////////////////HTML///////////////////////////////////
   return (
     <main>
+
       <Button onClick={createNew}>Add new</Button>
 
       {categories.map((category) => (
@@ -77,6 +80,9 @@ export default function Home() {
           
         </div>
       ))}
+      <div className="bg-yellow-400">
+        <Hero />
+      </div>
     </main>
   );
 }
