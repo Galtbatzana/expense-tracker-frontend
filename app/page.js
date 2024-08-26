@@ -68,21 +68,20 @@ export default function Home() {
 
 ////////////////////HTML///////////////////////////////////
   return (
-    <main>
+    <main className="container mx-auto">
+      <div className="bg-yellow-300">
+        <Hero />
+      </div>
 
       <Button onClick={createNew}>Add new</Button>
-
       {categories.map((category) => (
         <div key={category.id}>
           {category.name}
           <Button onClick={() => editCategoryName(category.id, category.name)}>Edit</Button>
           <Button onClick={() => deleteCategoryName(category.id,category.name)}>Del</Button>
-          
         </div>
       ))}
-      <div className="bg-yellow-400">
-        <Hero />
-      </div>
+
     </main>
   );
 }

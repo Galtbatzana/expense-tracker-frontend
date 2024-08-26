@@ -10,7 +10,7 @@ const categories = [
     { name: "Investment"},
     { name: "Income"},
     { name: "Others"},
-]
+];
 
 
 export const Categories = () => {
@@ -19,8 +19,7 @@ export const Categories = () => {
             <div>
                 {categories.map((cat)=> {
                     <div key={cat.id}>{cat.name}</div> 
-                })
-                }  
+                })}  
             </div>
         </div>
     );
