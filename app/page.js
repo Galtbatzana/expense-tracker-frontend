@@ -1,8 +1,9 @@
 "use client";
 
+import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { Hero } from "@/component/Hero/Hero";
+
 
 
 export default function Home() {
@@ -69,18 +70,21 @@ export default function Home() {
 ////////////////////HTML///////////////////////////////////
   return (
     <main className="container mx-auto">
-      <div className="bg-yellow-300">
+
+      <div className="bg-yellow-300 container mx-auto">
         <Hero />
       </div>
 
-      <Button onClick={createNew}>Add new</Button>
-      {categories.map((category) => (
-        <div key={category.id}>
-          {category.name}
-          <Button onClick={() => editCategoryName(category.id, category.name)}>Edit</Button>
-          <Button onClick={() => deleteCategoryName(category.id,category.name)}>Del</Button>
-        </div>
-      ))}
+      <div>
+        <Button onClick={createNew}>Add new</Button>
+        {categories.map((category) => (
+          <div key={category.id}>
+            {category.name}
+            <Button onClick={() => editCategoryName(category.id, category.name)}>Edit</Button>
+            <Button onClick={() => deleteCategoryName(category.id,category.name)}>Del</Button>
+          </div>
+        ))}
+      </div>
 
     </main>
   );
