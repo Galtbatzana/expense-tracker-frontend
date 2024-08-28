@@ -1,5 +1,6 @@
 "use client";
 
+import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -70,7 +71,7 @@ export default function Home() {
   ////////////////////HTML///////////////////////////////////
   return (
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
-
+      <Header />
       <Hero />
 
       

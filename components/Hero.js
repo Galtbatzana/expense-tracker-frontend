@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -29,13 +28,13 @@ export const Hero = () => {
 
   return (
     <div className="container mx-auto flex bg-[#E5E7EB]">
-      <div className="w-[282px] mx-4">
-        <div>
+      <div className="w-[282px] mx-4 bg-white">
+        <div className="mx-3">
           <div className="mb-3">
-            <p className="font-bold mb-3">Records</p>
+            <p className="font-bold mb-3 mt-6">Records</p>
             <Button
               variant="secondary"
-              className="bg-blue-700 text-white rounded-full px-4"
+              className="bg-[#0166FF] text-white rounded-full px-4 w-full"
             >
               + Add Category
             </Button>
@@ -44,35 +43,35 @@ export const Hero = () => {
           <input
             type="text"
             placeholder="Search"
-            className="input input-bordered w-full max-w-xs rounded-lg p-2 mb-3"
+            className="input input-bordered w-full max-w-xs rounded-lg p-2 mb-3 bg-[#E5E7EB]"
           />
           <div className="flex-col my-4">
             <p className="font-bold my-6">Types</p>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3">
               <Checkbox className="rounded-full" />
               <p>ALL</p>
             </div>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3">
               <Checkbox className="rounded-full" />
               <p>Income</p>
             </div>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3">
               <Checkbox className="rounded-full" />
               <p>Expense</p>
             </div>
           </div>
         </div>
 
-        <div className="flex-col">
+        <div className="flex-col mx-3">
           <div className="flex justify-between py-6">
             <p className="font-bold">Category</p>
-            <button>Clear</button>
+            <button className="text-[#1F2937]">Clear</button>
           </div>
 
           <Categories />
 
           <div>
-            <div onClick={() => setOpen(true)}>+</div>
+            <div onClick={() => setOpen(true)}>+ Add Category</div>
             <Dialog open={open}>
               <DialogTrigger asChild>
                 {/* <Button variant="outline">Edit Profile</Button> */}
@@ -106,23 +105,23 @@ export const Hero = () => {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <p>Add Category</p>
+        
           </div>
         </div>
-        <div>
+        <div className="mx-3">
           <p>Amount Range</p>
-          <div className="flex">
-            <Input />
-            <Input />
+          <div className="flex gap-2 mt-3">
+            <Input className="bg-[#E5E7EB]" placeholder="0"/>
+            <Input className="bg-[#E5E7EB]" placeholder="100"/>
           </div>
-          <div>
+          <div className="my-4">
             <Slider />
           </div>
         </div>
       </div>
 
       <div className="flex-1 mx-4">
-        <div>
+        <div className="mt-6">
           <div>
             <Carousel /> last 30 days
           </div>
@@ -132,48 +131,48 @@ export const Hero = () => {
         </div>
 
         <div>
-          <div className="flex-col bg-white my-2">
-            <div className="flex items-center justify-between rounded-full">
-              <div className="flex items-center justify-center">
-                <Checkbox />
+          <div className="flex flex-col bg-[#E5E7EB] gap-3">
+            <div className="flex items-center justify-between bg-white rounded-lg">
+              <div className="flex items-center justify-center py-3 pl-6">
+                <Checkbox className="mr-2"/>
                 <p>Select all</p>
               </div>
-              <p>35.500$</p>
+              <p className="pr-6">35.500$</p>
             </div>
             <p>Today</p>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Checkbox />
-                <div>icon</div>
+            <div className="flex items-center justify-between bg-white rounded-lg">
+              <div className="flex items-center py-3 pl-6">
+                <Checkbox className="mr-2"/>
+                <div className="m-2 w-8 h-8 rounded-full"><House /></div>
                 <div>
-                  <p>Lending & Renting</p>
-                  <p>14:00</p>
+                  <p >Lending & Renting</p>
+                  <p className="text-[12px]">14:00</p>
                 </div>
               </div>
-              <p>1.000$</p>
+              <p className="pr-6">1.000$</p>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Checkbox />
-                <div>icon</div>
+            <div className="flex items-center justify-between bg-white rounded-lg">
+              <div className="flex items-center py-3 pl-6">
+                <Checkbox className="mr-2"/>
+                <div className="m-2 w-8 h-8 rounded-full"><House /></div>
                 <div>
                   <p>Food & Drinks</p>
-                  <p>14:00</p>
+                  <p className="text-[12px]">14:00</p>
                 </div>
               </div>
-              <p>1.000$</p>
+              <p className="mr-6">1.000$</p>
             </div>
             <p>Yesterday</p>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Checkbox />
-                <div>icon</div>
+            <div className="flex items-center justify-between bg-white rounded-lg">
+              <div className="flex items-center py-3 pl-6">
+                <Checkbox className="mr-2"/>
+                <div className="m-2 w-8 h-8 rounded-full"><House /></div>
                 <div>
                   <p>Lending & Renting</p>
-                  <p>14:00</p>
+                  <p className="text-[12px]">14:00</p>
                 </div>
               </div>
-              <p>1.000$</p>
+              <p className="mr-6">1.000$</p>
             </div>
           </div>
         </div>
