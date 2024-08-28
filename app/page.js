@@ -4,11 +4,10 @@ import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
-
-
 export default function Home() {
-
   const [categories, setCategories] = useState([]);
+  const [icon, setIcon] = useState();
+  const [color, setColor] = useState();
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
@@ -22,70 +21,78 @@ export default function Home() {
   useEffect(() => {
     loadList();
   }, []);
-////////////////CREATE////////////////////////////////////////////
+  ////////////////CREATE////////////////////////////////////////////
   function createNew() {
     const name = prompt("Name...");
-    fetch(`http://localhost:4000/categories`,{
+    fetch(`http://localhost:4000/categories`, {
       method: "POST",
-      body: JSON.stringify({ name: name }),
-      headers: { "Content-type": "application/json; charset=UTF-8",
-      },
+      body: JSON.stringify({ 
+        name: name,
+        color: color, 
+        // icon: icon,
+      }),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
     })
       .then((res) => res.json())
       .then(() => {
         loadList();
       });
   }
+  
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
-/////////////////EDIT//////////////////////////////////////////////
-  function editCategoryName (id, oldName) {
+  /////////////////EDIT//////////////////////////////////////////////
+  function editCategoryName(id, oldName) {
     const name = prompt("Are you sure?", oldName);
     if (name) {
-      fetch(`http://localhost:4000/categories/${id}`,{
+      fetch(`http://localhost:4000/categories/${id}`, {
         method: "PUT",
         body: JSON.stringify({ name: name }),
-        headers: { "Content-type": "application/json; charset=UTF-8",
-        },
-      })
-        .then(() => {
-          loadList();
-        });
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      }).then(() => {
+        loadList();
+      });
     }
   }
-/////////DELETE/////////////////////////////////////////////
-  function deleteCategoryName (id,oldName) {
+  /////////DELETE/////////////////////////////////////////////
+  function deleteCategoryName(id, oldName) {
     if (confirm("are you sure?")) {
-      fetch(`http://localhost:4000/categories/${id}`,{
+      fetch(`http://localhost:4000/categories/${id}`, {
         method: "DELETE",
-      })
-        .then((res) => {
-          if (res.status === 404) {
-            alert("Category not found");
-          }
-          loadList();
-        });
+      }).then((res) => {
+        if (res.status === 404) {
+          alert("Category not found");
+        }
+        loadList();
+      });
     }
   }
 
-////////////////////HTML///////////////////////////////////
+  ////////////////////HTML///////////////////////////////////
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
 
-      <div className="bg-yellow-300 container mx-auto">
-        <Hero />
-      </div>
+      <Hero />
+
+      
 
       <div>
         <Button onClick={createNew}>Add new</Button>
         {categories.map((category) => (
           <div key={category.id}>
             {category.name}
-            <Button onClick={() => editCategoryName(category.id, category.name)}>Edit</Button>
-            <Button onClick={() => deleteCategoryName(category.id,category.name)}>Del</Button>
+            <Button
+              onClick={() => editCategoryName(category.id, category.name)}
+            >
+              Edit
+            </Button>
+            <Button
+              onClick={() => deleteCategoryName(category.id, category.name)}
+            >
+              Del
+            </Button>
           </div>
         ))}
       </div>
-
     </main>
   );
 }

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Check } from "lucide-react";
+
 const categoriesColors = [
     {
         name: "blue", 
@@ -30,11 +33,16 @@ const categoriesColors = [
 ];
 
 export const CatergoriesColors = () => {
+    const [color, setColor] = useState();
+   
     return (
-        <div>
-            {catergoriesColor.map(({name,value})=>(
-                <div key={name} className="w-8 h-8 rounded-full" style={{backgroundColors: value}}></div>
+        <div className="flex gap-2 m-2">
+            {categoriesColors.map(({name, value})=>(
+                <div key={name} onClick={()=>setColor(name)} className="w-8 h-8 rounded-full text-white flex items-center justify-center" style={{backgroundColor: value}}>
+                    {color === name && <Check className="w-4 h-4"/>}
+                </div>
             ))}
         </div>
     );
 }
+

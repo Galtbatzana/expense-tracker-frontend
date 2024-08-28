@@ -82,7 +82,7 @@ const catergoriesIcons = [
 
 export const CatergoriesIcons = () => {
     return (
-        <div>
+        <div className="grid grid-cols-6 gap-2">
             {catergoriesIcons.map(({name, Icon})=>(
                 <div key={name}>
                     <Icon />
