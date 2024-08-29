@@ -33,7 +33,7 @@ const categoriesColors = [
 ];
 
 export const CatergoriesColors = () => {
-    const [color, setColor] = useState();
+    const [color, setColor] = useState("");
    
     return (
         <div className="flex gap-2 m-2">

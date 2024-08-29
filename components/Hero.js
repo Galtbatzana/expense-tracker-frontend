@@ -15,16 +15,21 @@ import { Slider } from "./ui/slider";
 import { Carousel } from "./ui/carousel";
 import { House, Icon } from "lucide-react";
 import { CatergoriesIcons } from "./CategoriesIcon";
+import { CatergoriesColors } from "./CategoriesColor";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CatergoriesColors } from "./CategoriesColor";
+
+
 
 export const Hero = () => {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+
+console.log(name);
 
   return (
     <div className="container mx-auto flex bg-[#E5E7EB]">
@@ -34,10 +39,43 @@ export const Hero = () => {
             <p className="font-bold mb-3 mt-6">Records</p>
             <Button
               variant="secondary"
-              className="bg-[#0166FF] text-white rounded-full px-4 w-full"
+              className="bg-[#0166FF] text-white rounded-full px-4 w-full" onClick={()=>setOpen(true)}
             >
               + Add Category
             </Button>
+              <Dialog open={open}>
+                <DialogTrigger asChild>
+                  {/* <Button variant="outline">Edit Profile</Button> */}
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Categories</DialogTitle>
+                  </DialogHeader>
+                  <div className="flex gap-4">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="secondary">
+                          <House />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80">
+                        <CatergoriesIcons />
+                        <CatergoriesColors />
+                      </PopoverContent>
+                    </Popover>
+                    <Input value={name} onChange={(event)=>setName(event.target.value)} />
+                  </div>
+                  <DialogFooter>
+                    <Button
+                      onClick={() => setOpen(false)}
+                      type="submit"
+                      className="w-full rounded-full bg-green-600 hover:bg-green-900"
+                    >
+                      Add
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
           </div>
 
           <input
@@ -71,41 +109,7 @@ export const Hero = () => {
           <Categories />
 
           <div>
-            <div onClick={() => setOpen(true)}>+ Add Category</div>
-            <Dialog open={open}>
-              <DialogTrigger asChild>
-                {/* <Button variant="outline">Edit Profile</Button> */}
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Categories</DialogTitle>
-                </DialogHeader>
-                <div className="flex gap-4">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="secondary">
-                        <House />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-80">
-                      <CatergoriesIcons />
-                      <CatergoriesColors />
-                    </PopoverContent>
-                  </Popover>
-                  <Input defaultValue="Name" />
-                </div>
-                <DialogFooter>
-                  <Button
-                    onClick={() => setOpen(false)}
-                    type="submit"
-                    className="w-full rounded-full bg-green-600 hover:bg-green-900"
-                  >
-                    Add
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-        
+            <div>+ Add Category</div>
           </div>
         </div>
         <div className="mx-3">

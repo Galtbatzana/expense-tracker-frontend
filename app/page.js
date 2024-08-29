@@ -5,10 +5,11 @@ import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
+
+
+
 export default function Home() {
   const [categories, setCategories] = useState([]);
-  const [icon, setIcon] = useState();
-  const [color, setColor] = useState();
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
@@ -22,14 +23,17 @@ export default function Home() {
   useEffect(() => {
     loadList();
   }, []);
+
+
+
   ////////////////CREATE////////////////////////////////////////////
   function createNew() {
-    const name = prompt("Name...");
+   
     fetch(`http://localhost:4000/categories`, {
       method: "POST",
       body: JSON.stringify({ 
-        name: name,
-        color: color, 
+        // name: name,
+        // color: color, 
         // icon: icon,
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -67,15 +71,14 @@ export default function Home() {
       });
     }
   }
+/////////////////////////////////////////////////////////////
 
   ////////////////////HTML///////////////////////////////////
   return (
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
       <Header />
       <Hero />
-
-      
-
+    
       <div>
         <Button onClick={createNew}>Add new</Button>
         {categories.map((category) => (

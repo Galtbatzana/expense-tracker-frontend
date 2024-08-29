@@ -14,12 +14,13 @@ const categories = [
 
 
 export const Categories = () => {
+    
     return (
         <div>
             <img src="../images/Union.png"></img>
             <div className="py-2">
                 {categories.map((cat)=> (
-                    <div key={cat.id}>{cat.name}</div> 
+                    <div key={cat.name}>{cat.name}</div> 
                 ))}  
             </div>
         </div>
