@@ -77,7 +77,9 @@ export default function Home() {
   return (
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
       <Header />
-      <Hero />
+      
+    
+
     
       <div>
         <Button onClick={createNew}>Add new</Button>
