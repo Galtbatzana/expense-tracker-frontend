@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Carousel } from "@/components/ui/carousel";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { House } from "lucide-react";
 import { useEffect, useState } from "react";
 import { categoriesColors } from "@/components/CategoriesColor";
@@ -35,6 +36,7 @@ export default function Home() {
   const [color, setColor] = useState("blue");
   const [icon, setIcon] = useState("Home");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
@@ -51,6 +53,8 @@ export default function Home() {
 
   ////////////////CREATE////////////////////////////////////////////
   function createNew() {
+    setLoading(true);
+
     fetch(`http://localhost:4000/categories`, {
       method: "POST",
       body: JSON.stringify({
@@ -63,6 +67,9 @@ export default function Home() {
       .then((res) => res.json())
       .then(() => {
         loadList();
+        setLoading(false);
+        setOpen(false);
+        toast("Successfully created!");
       });
   }
 
@@ -94,14 +101,34 @@ export default function Home() {
     }
   }
   /////////////////////////////////////////////////////////////
+  function categoryIcon({iconName, color}) {
+    const iconObject = catergoriesIcons.find((item)=>item.name === iconName);
+    const colorObject = categoriesColors.find((item)=>item.name === color);
 
+    if(!iconObject) {
+      return <House/>;
+    }
+    
+    let hexColor;
+    if (!colorObject) {
+      hexColor = "#000";
+    } 
+    else {
+      hexColor = colorObject.value;
+    }
 
-  console.log({categories})
+    const { Icon } = iconObject; 
+
+      return <Icon style={{color: hexColor}} />; 
+  }
+///////////////////////////////////////////////////////////
+
+  console.log({color, icon, name})
   ////////////////////HTML///////////////////////////////////
   return (
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
       <Header />
-
+      <Toaster />
       <div className="container mx-auto flex bg-[#E5E7EB]">
         <div className="w-[282px] mx-4 bg-white">
           <div className="mx-3">
@@ -159,17 +186,13 @@ export default function Home() {
 
                       </PopoverContent>
                     </Popover>
-                    <Input
+                    <Input disabled={loading}
                       value={name}
                       onChange={(event) => setName(event.target.value)}
                     />
                   </div>
                   <DialogFooter>
-                    <Button
-                      onClick={createNew}
-                      type="submit"
-                      className="w-full rounded-full bg-green-600 hover:bg-green-900"
-                    >
+                    <Button disabled={loading} onClick={createNew} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
                       Add
                     </Button>
                   </DialogFooter>
@@ -207,6 +230,24 @@ export default function Home() {
 
             <div>
               <div>+ Add Category</div>
+              <div>
+                {categories.map((category) => (
+                  <div key={category.id} className="flex gap-1">
+                    <categoryIcon iconName={category.icon} color={category.color}/>
+                    {category.name}
+                    <Button
+                      onClick={() => editCategoryName(category.id, category.name)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      onClick={() => deleteCategoryName(category.id, category.name)}
+                    >
+                      Del
+                    </Button>
+                  </div>
+                ))}
+      </div>
             </div>
           </div>
           <div className="mx-3">
@@ -286,24 +327,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
-        <Button onClick={createNew}>Add new</Button>
-        {categories.map((category) => (
-          <div key={category.id}>
-            {category.name}
-            <Button
-              onClick={() => editCategoryName(category.id, category.name)}
-            >
-              Edit
-            </Button>
-            <Button
-              onClick={() => deleteCategoryName(category.id, category.name)}
-            >
-              Del
-            </Button>
-          </div>
-        ))}
-      </div>
+      
     </main>
   );
 }
