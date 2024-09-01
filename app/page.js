@@ -27,6 +27,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Slider } from "@radix-ui/react-slider";
+import { Hero } from "@/components/Hero";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -99,7 +100,7 @@ export default function Home() {
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
       <Header />
       <Hero />
-    
+
       <div>
         <Button onClick={createNew}>Add new</Button>
         {categories.map((category) => (
