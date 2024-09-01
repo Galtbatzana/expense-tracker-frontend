@@ -32,8 +32,8 @@ import { Slider } from "@radix-ui/react-slider";
 export default function Home() {
   const [categories, setCategories] = useState([]);
   const [open, setOpen] = useState(false);
-  const [color, setColor] = useState("");
-  const [icon, setIcon] = useState("");
+  const [color, setColor] = useState("blue");
+  const [icon, setIcon] = useState("Home");
   const [name, setName] = useState("");
 
   //automataar render hiij bga function loadList geed ner ugchie
@@ -54,9 +54,9 @@ export default function Home() {
     fetch(`http://localhost:4000/categories`, {
       method: "POST",
       body: JSON.stringify({
-        // name: name,
-        // color: color,
-        // icon: icon,
+        name: name,
+        color: color,
+        icon: icon,
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
@@ -95,6 +95,8 @@ export default function Home() {
   }
   /////////////////////////////////////////////////////////////
 
+
+  console.log({categories})
   ////////////////////HTML///////////////////////////////////
   return (
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
@@ -116,7 +118,7 @@ export default function Home() {
                 <DialogTrigger asChild>
                   {/* <Button variant="outline">Edit Profile</Button> */}
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] rounded-xl">
                   <DialogHeader>
                     <DialogTitle>Categories</DialogTitle>
                   </DialogHeader>
@@ -164,7 +166,7 @@ export default function Home() {
                   </div>
                   <DialogFooter>
                     <Button
-                      onClick={() => setOpen(false)}
+                      onClick={createNew}
                       type="submit"
                       className="w-full rounded-full bg-green-600 hover:bg-green-900"
                     >
