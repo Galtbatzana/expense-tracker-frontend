@@ -37,6 +37,8 @@ export default function Home() {
   const [icon, setIcon] = useState("Home");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [editingCategory, setEditingCategory] = useState();
+  const [catergory, setCategory] = useState();
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
@@ -46,7 +48,6 @@ export default function Home() {
         setCategories(data);
       });
   }
-
   useEffect(() => {
     loadList();
   }, []);
@@ -64,28 +65,36 @@ export default function Home() {
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     })
-      .then((res) => res.json())
+      
       .then(() => {
         loadList();
         setLoading(false);
         setOpen(false);
         toast("Successfully created!");
+        reset();
       });
   }
 
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
   /////////////////EDIT//////////////////////////////////////////////
-  function editCategoryName(id, oldName) {
-    const name = prompt("Are you sure?", oldName);
-    if (name) {
-      fetch(`http://localhost:4000/categories/${id}`, {
+  function updateCategory(id) {
+      setLoading(true);
+      fetch(`http://localhost:4000/categories/${editingCategory.id}`, {
         method: "PUT",
-        body: JSON.stringify({ name: name }),
+        body: JSON.stringify({ 
+        name: name,
+        color: color,
+        icon: icon, 
+      }),
         headers: { "Content-type": "application/json; charset=UTF-8" },
       }).then(() => {
         loadList();
+        setLoading(false);
+        setOpen(false);
+        toast("Successfully Updated!");
+        reset();
       });
-    }
+    
   }
   /////////DELETE/////////////////////////////////////////////
   function deleteCategoryName(id, oldName) {
@@ -101,7 +110,7 @@ export default function Home() {
     }
   }
   /////////////////////////////////////////////////////////////
-  function categoryIcon({iconName, color}) {
+  function CategoryIcon123 ({iconName, color}) {
     const iconObject = catergoriesIcons.find((item)=>item.name === iconName);
     const colorObject = categoriesColors.find((item)=>item.name === color);
 
@@ -122,8 +131,21 @@ export default function Home() {
       return <Icon style={{color: hexColor}} />; 
   }
 ///////////////////////////////////////////////////////////
-
-  console.log({color, icon, name})
+  useEffect(()=>{
+    if (editingCategory) {
+      setOpen(true);
+      setName(editingCategory.name);
+      setIcon(editingCategory.icon);
+      setColor(editingCategory.color);
+    }
+  },[editingCategory]);
+////////////////////////////////////////////////////////
+  function reset() {
+    setName("");
+    setIcon("home");
+    setColor("blue");
+  }
+  // console.log();
   ////////////////////HTML///////////////////////////////////
   return (
     <main className="container mx-auto bg-[#F3F4F6] max-w-[1440px]">
@@ -153,7 +175,7 @@ export default function Home() {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button variant="secondary">
-                          <House />
+                          <CategoryIcon123 iconName={categories.icon} color={categories.color}/>
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-80">
@@ -192,9 +214,18 @@ export default function Home() {
                     />
                   </div>
                   <DialogFooter>
-                    <Button disabled={loading} onClick={createNew} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
-                      Add
-                    </Button>
+                    {
+                      editingCategory ? (
+                    <Button disabled={loading} onClick={updateCategory} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
+                      Update
+                    </Button> 
+                      ) 
+                    :
+                    (<Button disabled={loading} onClick={createNew} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
+                    Add
+                  </Button> 
+                    )}
+
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -233,10 +264,10 @@ export default function Home() {
               <div>
                 {categories.map((category) => (
                   <div key={category.id} className="flex gap-1">
-                    <categoryIcon iconName={category.icon} color={category.color}/>
+                    <CategoryIcon123 iconName={category.icon} color={category.color}/>
                     {category.name}
                     <Button
-                      onClick={() => editCategoryName(category.id, category.name)}
+                      onClick={() => setEditingCategory(category)}
                     >
                       Edit
                     </Button>
@@ -247,7 +278,7 @@ export default function Home() {
                     </Button>
                   </div>
                 ))}
-      </div>
+      </div> 
             </div>
           </div>
           <div className="mx-3">
