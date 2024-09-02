@@ -38,7 +38,7 @@ export default function Home() {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingCategory, setEditingCategory] = useState();
-  const [catergory, setCategory] = useState();
+  // const [catergory, setCategory] = useState();
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
@@ -77,7 +77,7 @@ export default function Home() {
 
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
   /////////////////EDIT//////////////////////////////////////////////
-  function updateCategory(id) {
+  function updateCategory() {
       setLoading(true);
       fetch(`http://localhost:4000/categories/${editingCategory.id}`, {
         method: "PUT",
