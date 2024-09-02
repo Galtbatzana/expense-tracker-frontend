@@ -69,9 +69,8 @@ export default function Home() {
       .then(() => {
         loadList();
         setLoading(false);
-        setOpen(false);
+        closeDialog();
         toast("Successfully created!");
-        reset();
       });
   }
 
@@ -90,9 +89,8 @@ export default function Home() {
       }).then(() => {
         loadList();
         setLoading(false);
-        setOpen(false);
+        closeDialog();
         toast("Successfully Updated!");
-        reset();
       });
     
   }
@@ -144,6 +142,13 @@ export default function Home() {
     setName("");
     setIcon("home");
     setColor("blue");
+    setEditingCategory(null);
+  }
+
+  function closeDialog() {
+    reset();
+    setOpen(false);
+
   }
   // console.log();
   ////////////////////HTML///////////////////////////////////
@@ -158,77 +163,9 @@ export default function Home() {
               <p className="font-bold mb-3 mt-6">Records</p>
               <Button
                 variant="secondary"
-                className="bg-[#0166FF] text-white rounded-full px-4 w-full"
-                onClick={() => setOpen(true)}
-              >
+                className="bg-[#0166FF] text-white rounded-full px-4 w-full">
                 + Add Category
               </Button>
-              <Dialog open={open}>
-                <DialogTrigger asChild>
-                  {/* <Button variant="outline">Edit Profile</Button> */}
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px] rounded-xl">
-                  <DialogHeader>
-                    <DialogTitle>Categories</DialogTitle>
-                  </DialogHeader>
-                  <div className="flex gap-4">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="secondary">
-                          <CategoryIcon123 iconName={categories.icon} color={categories.color}/>
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-80">
-                        <div className="grid grid-cols-6 gap-2">
-                          {catergoriesIcons.map(({ name, Icon }) => (
-                            <div
-                              key={name}
-                              onClick={() => setIcon(name)}
-                              className={`flex items-center justify-center ${
-                                icon === name ? "bg-blue-500" : ""
-                              }`}
-                            >
-                              <Icon />
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="flex gap-2 m-2">
-                          {categoriesColors.map(({ name, value }) => (
-                            <div
-                              key={name}
-                              onClick={() => setColor(name)}
-                              className="w-8 h-8 rounded-full text-white flex items-center justify-center"
-                              style={{ backgroundColor: value }}
-                            >
-                              {color === name && <Check className="w-4 h-4" />}
-                            </div>
-                          ))}
-                        </div>
-
-                      </PopoverContent>
-                    </Popover>
-                    <Input disabled={loading}
-                      value={name}
-                      onChange={(event) => setName(event.target.value)}
-                    />
-                  </div>
-                  <DialogFooter>
-                    {
-                      editingCategory ? (
-                    <Button disabled={loading} onClick={updateCategory} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
-                      Update
-                    </Button> 
-                      ) 
-                    :
-                    (<Button disabled={loading} onClick={createNew} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
-                    Add
-                  </Button> 
-                    )}
-
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
             </div>
 
             <input
@@ -260,7 +197,77 @@ export default function Home() {
             </div>
 
             <div>
-              <div>+ Add Category</div>
+              <Button onClick={()=>setOpen(true)}>+ Add Category</Button>
+                <Dialog open={open}>
+                  <DialogTrigger asChild>
+                    {/* <Button variant="outline">Edit Profile</Button> */}
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px] rounded-xl">
+                    <DialogHeader>
+                      <DialogTitle>Categories</DialogTitle>
+                    </DialogHeader>
+                    <div className="flex gap-4">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="secondary">
+                            <CategoryIcon123 iconName={icon} color={color}/>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80">
+                          <div className="grid grid-cols-6 gap-2">
+                            {catergoriesIcons.map(({ name, Icon }) => (
+                              <div
+                                key={name}
+                                onClick={() => setIcon(name)}
+                                className={`flex items-center justify-center ${
+                                  icon === name ? "bg-blue-500" : ""
+                                }`}
+                              >
+                                <Icon />
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="flex gap-2 m-2">
+                            {categoriesColors.map(({ name, value }) => (
+                              <div
+                                key={name}
+                                onClick={() => setColor(name)}
+                                className="w-8 h-8 rounded-full text-white flex items-center justify-center"
+                                style={{ backgroundColor: value }}
+                              >
+                                {color === name && <Check className="w-4 h-4" />}
+                              </div>
+                            ))}
+                          </div>
+
+                        </PopoverContent>
+                      </Popover>
+                      <Input disabled={loading}
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                      />
+                    </div>
+                    <DialogFooter>
+                      {
+                        editingCategory ? (
+                      <Button disabled={loading} onClick={updateCategory} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
+                        Update
+                      </Button> 
+                        ) 
+                      :
+                      (<Button disabled={loading} onClick={createNew} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
+                      Add
+                    </Button> 
+                      )}
+
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
+
+
+
               <div>
                 {categories.map((category) => (
                   <div key={category.id} className="flex gap-1">
