@@ -13,6 +13,20 @@ import { categoriesColors } from "@/components/CategoriesColor";
 import { catergoriesIcons } from "@/components/CategoriesIcon";
 import { Check } from "lucide-react";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// import { format } from "date-fns"
+// import { Calendar as CalendarIcon } from "lucide-react" 
+// import { cn } from "@/lib/utils";
+// import { Calendar } from "@/components/ui/calendar";
+// import { date } from "zod";
+
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -28,6 +42,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Slider } from "@radix-ui/react-slider";
+import { RadioGroup } from "@radix-ui/react-context-menu";
 
 
 export default function Home() {
@@ -161,11 +176,72 @@ export default function Home() {
           <div className="mx-3">
             <div className="mb-3">
               <p className="font-bold mb-3 mt-6">Records</p>
-              <Button
+              <Button onClick={setOpen}
                 variant="secondary"
                 className="bg-[#0166FF] text-white rounded-full px-4 w-full">
                 + Add Category
               </Button>
+
+              <Dialog open={()=>setOpen(true)}>
+                <DialogContent className="sm:max-w-[792px] ">
+                  <DialogHeader>
+                    <DialogTitle>Add Records</DialogTitle>
+                  </DialogHeader >
+                    <div className="flex gap-4">
+                      <div className="flex flex-col flex-1 gap-4 m-4">
+                        <RadioGroup>
+                          <div className="flex">
+                            <Button variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full">INCOME</Button>
+                            <Button variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full">EXPENSE</Button>
+                          </div>
+                        </RadioGroup>
+                        <div>
+                          <Input id="username" defaultValue="Insert Amount" className="bg-[#D1D5DB] rounded-md"/>
+
+                        </div>
+                        <p>Category</p> 
+                            <Select>
+                              <SelectTrigger className="w-[180px] bg-[#D1D5DB]">
+                                <SelectValue placeholder="Choose" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="light">Light</SelectItem>
+                                <SelectItem value="dark">Dark</SelectItem>
+                                <SelectItem value="system">System</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          
+                        <div>Date</div>  
+                        <Button variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full">Add Records</Button>
+                      </div>
+                      <div className="flex flex-col flex-1 gap-4 m-4">
+
+                        <p>Payee</p>
+                          <Select>
+                              <SelectTrigger className="w-[180px] bg-[#D1D5DB]">
+                                <SelectValue placeholder="Write here" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="light">Light</SelectItem>
+                                <SelectItem value="dark">Dark</SelectItem>
+                                <SelectItem value="system">System</SelectItem>
+                              </SelectContent>
+                          </Select>
+                        <p>Note</p>
+                        <Input placeholder="Write here" className=" bg-[#D1D5DB] "/>
+
+                      </div>
+
+
+
+                    </div>
+                  
+                  <DialogFooter>
+                    <Button type="submit">Save changes</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
             </div>
 
             <input
@@ -197,7 +273,7 @@ export default function Home() {
             </div>
 
             <div>
-              <Button onClick={()=>setOpen(true)}>+ Add Category</Button>
+              <Button className="bg-[#0166FF] text-white" onClick={()=>setOpen(true)}>+ Add Category</Button>
                 <Dialog open={open}>
                   <DialogContent onClose={()=>setOpen(false)} className="sm:max-w-[425px] rounded-xl">
                     <DialogHeader>
