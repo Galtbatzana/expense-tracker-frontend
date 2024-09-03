@@ -199,10 +199,7 @@ export default function Home() {
             <div>
               <Button onClick={()=>setOpen(true)}>+ Add Category</Button>
                 <Dialog open={open}>
-                  <DialogTrigger asChild>
-                    {/* <Button variant="outline">Edit Profile</Button> */}
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px] rounded-xl">
+                  <DialogContent onClose={()=>setOpen(false)} className="sm:max-w-[425px] rounded-xl">
                     <DialogHeader>
                       <DialogTitle>Categories</DialogTitle>
                     </DialogHeader>
