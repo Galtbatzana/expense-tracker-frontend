@@ -13,20 +13,6 @@ import { categoriesColors } from "@/components/CategoriesColor";
 import { catergoriesIcons } from "@/components/CategoriesIcon";
 import { Check } from "lucide-react";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-// import { format } from "date-fns"
-// import { Calendar as CalendarIcon } from "lucide-react" 
-// import { cn } from "@/lib/utils";
-// import { Calendar } from "@/components/ui/calendar";
-// import { date } from "zod";
-
-import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -35,15 +21,13 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Slider } from "@radix-ui/react-slider";
-import { RadioGroup } from "@radix-ui/react-context-menu";
-
+import { useRouter } from "next/navigation";
+import { RecordsDialog } from "@/components/RecordsDialog";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -53,7 +37,8 @@ export default function Home() {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [editingCategory, setEditingCategory] = useState();
-  // const [catergory, setCategory] = useState();
+  const [addRecordsOpen, setaddRecordsOpen] = useState(false);
+  const router = useRouter();
 
   //automataar render hiij bga function loadList geed ner ugchie
   function loadList() {
@@ -79,35 +64,32 @@ export default function Home() {
         icon: icon,
       }),
       headers: { "Content-type": "application/json; charset=UTF-8" },
-    })
-      
-      .then(() => {
-        loadList();
-        setLoading(false);
-        closeDialog();
-        toast("Successfully created!");
-      });
+    }).then(() => {
+      loadList();
+      setLoading(false);
+      closeDialog();
+      toast("Successfully created!");
+    });
   }
 
   //ingeed uuruu backend ruu hussen data-gaa yawuulj chadaj bn
   /////////////////EDIT//////////////////////////////////////////////
   function updateCategory() {
-      setLoading(true);
-      fetch(`http://localhost:4000/categories/${editingCategory.id}`, {
-        method: "PUT",
-        body: JSON.stringify({ 
+    setLoading(true);
+    fetch(`http://localhost:4000/categories/${editingCategory.id}`, {
+      method: "PUT",
+      body: JSON.stringify({
         name: name,
         color: color,
-        icon: icon, 
+        icon: icon,
       }),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      }).then(() => {
-        loadList();
-        setLoading(false);
-        closeDialog();
-        toast("Successfully Updated!");
-      });
-    
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    }).then(() => {
+      loadList();
+      setLoading(false);
+      closeDialog();
+      toast("Successfully Updated!");
+    });
   }
   /////////DELETE/////////////////////////////////////////////
   function deleteCategoryName(id, oldName) {
@@ -123,36 +105,35 @@ export default function Home() {
     }
   }
   /////////////////////////////////////////////////////////////
-  function CategoryIcon123 ({iconName, color}) {
-    const iconObject = catergoriesIcons.find((item)=>item.name === iconName);
-    const colorObject = categoriesColors.find((item)=>item.name === color);
+  function CategoryIcon123({ iconName, color }) {
+    const iconObject = catergoriesIcons.find((item) => item.name === iconName);
+    const colorObject = categoriesColors.find((item) => item.name === color);
 
-    if(!iconObject) {
-      return <House/>;
+    if (!iconObject) {
+      return <House />;
     }
-    
+
     let hexColor;
     if (!colorObject) {
       hexColor = "#000";
-    } 
-    else {
+    } else {
       hexColor = colorObject.value;
     }
 
-    const { Icon } = iconObject; 
+    const { Icon } = iconObject;
 
-      return <Icon style={{color: hexColor}} />; 
+    return <Icon style={{ color: hexColor }} />;
   }
-///////////////////////////////////////////////////////////
-  useEffect(()=>{
+  ///////////////////////////////////////////////////////////
+  useEffect(() => {
     if (editingCategory) {
       setOpen(true);
       setName(editingCategory.name);
       setIcon(editingCategory.icon);
       setColor(editingCategory.color);
     }
-  },[editingCategory]);
-////////////////////////////////////////////////////////
+  }, [editingCategory]);
+  ////////////////////////////////////////////////////////
   function reset() {
     setName("");
     setIcon("home");
@@ -163,7 +144,6 @@ export default function Home() {
   function closeDialog() {
     reset();
     setOpen(false);
-
   }
   // console.log();
   ////////////////////HTML///////////////////////////////////
@@ -176,72 +156,14 @@ export default function Home() {
           <div className="mx-3">
             <div className="mb-3">
               <p className="font-bold mb-3 mt-6">Records</p>
-              <Button onClick={setOpen}
+              <Button
+                onClick={() => router.push(`?create=New`)}
                 variant="secondary"
-                className="bg-[#0166FF] text-white rounded-full px-4 w-full">
+                className="bg-[#0166FF] text-white rounded-full px-4 w-full"
+              >
                 + Add Category
               </Button>
-
-              <Dialog open={()=>setOpen(true)}>
-                <DialogContent className="sm:max-w-[792px] ">
-                  <DialogHeader>
-                    <DialogTitle>Add Records</DialogTitle>
-                  </DialogHeader >
-                    <div className="flex gap-4">
-                      <div className="flex flex-col flex-1 gap-4 m-4">
-                        <RadioGroup>
-                          <div className="flex">
-                            <Button variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full">INCOME</Button>
-                            <Button variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full">EXPENSE</Button>
-                          </div>
-                        </RadioGroup>
-                        <div>
-                          <Input id="username" defaultValue="Insert Amount" className="bg-[#D1D5DB] rounded-md"/>
-
-                        </div>
-                        <p>Category</p> 
-                            <Select>
-                              <SelectTrigger className="w-[180px] bg-[#D1D5DB]">
-                                <SelectValue placeholder="Choose" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          
-                        <div>Date</div>  
-                        <Button variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full">Add Records</Button>
-                      </div>
-                      <div className="flex flex-col flex-1 gap-4 m-4">
-
-                        <p>Payee</p>
-                          <Select>
-                              <SelectTrigger className="w-[180px] bg-[#D1D5DB]">
-                                <SelectValue placeholder="Write here" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                              </SelectContent>
-                          </Select>
-                        <p>Note</p>
-                        <Input placeholder="Write here" className=" bg-[#D1D5DB] "/>
-
-                      </div>
-
-
-
-                    </div>
-                  
-                  <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-
+            <RecordsDialog />
             </div>
 
             <input
@@ -271,94 +193,106 @@ export default function Home() {
               <p className="font-bold">Category</p>
               <button className="text-[#1F2937]">Clear</button>
             </div>
-
             <div>
-              <Button className="bg-[#0166FF] text-white" onClick={()=>setOpen(true)}>+ Add Category</Button>
-                <Dialog open={open}>
-                  <DialogContent onClose={()=>setOpen(false)} className="sm:max-w-[425px] rounded-xl">
-                    <DialogHeader>
-                      <DialogTitle>Categories</DialogTitle>
-                    </DialogHeader>
-                    <div className="flex gap-4">
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button variant="secondary">
-                            <CategoryIcon123 iconName={icon} color={color}/>
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-80">
-                          <div className="grid grid-cols-6 gap-2">
-                            {catergoriesIcons.map(({ name, Icon }) => (
-                              <div
-                                key={name}
-                                onClick={() => setIcon(name)}
-                                className={`flex items-center justify-center ${
-                                  icon === name ? "bg-blue-500" : ""
-                                }`}
-                              >
-                                <Icon />
-                              </div>
-                            ))}
-                          </div>
-
-                          <div className="flex gap-2 m-2">
-                            {categoriesColors.map(({ name, value }) => (
-                              <div
-                                key={name}
-                                onClick={() => setColor(name)}
-                                className="w-8 h-8 rounded-full text-white flex items-center justify-center"
-                                style={{ backgroundColor: value }}
-                              >
-                                {color === name && <Check className="w-4 h-4" />}
-                              </div>
-                            ))}
-                          </div>
-
-                        </PopoverContent>
-                      </Popover>
-                      <Input disabled={loading}
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                      />
-                    </div>
-                    <DialogFooter>
-                      {
-                        editingCategory ? (
-                      <Button disabled={loading} onClick={updateCategory} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
+              <Button
+                className="bg-[#0166FF] text-white"
+                onClick={() => setOpen(true)}
+              >
+                + Add Category
+              </Button>
+              <Dialog open={open}>
+                <DialogContent
+                  onClose={() => setOpen(false)}
+                  className="sm:max-w-[425px] rounded-xl"
+                >
+                  <DialogHeader>
+                    <DialogTitle>Categories</DialogTitle>
+                  </DialogHeader>
+                  <div className="flex gap-4">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="secondary">
+                          <CategoryIcon123 iconName={icon} color={color} />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80">
+                        <div className="grid grid-cols-6 gap-2">
+                          {catergoriesIcons.map(({ name, Icon }) => (
+                            <div
+                              key={name}
+                              onClick={() => setIcon(name)}
+                              className={`flex items-center justify-center ${
+                                icon === name ? "bg-blue-500" : ""
+                              }`}
+                            >
+                              <Icon />
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex gap-2 m-2">
+                          {categoriesColors.map(({ name, value }) => (
+                            <div
+                              key={name}
+                              onClick={() => setColor(name)}
+                              className="w-8 h-8 rounded-full text-white flex items-center justify-center"
+                              style={{ backgroundColor: value }}
+                            >
+                              {color === name && <Check className="w-4 h-4" />}
+                            </div>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    <Input
+                      disabled={loading}
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
+                    />
+                  </div>
+                  <DialogFooter>
+                    {editingCategory ? (
+                      <Button
+                        disabled={loading}
+                        onClick={updateCategory}
+                        type="submit"
+                        className="w-full rounded-full bg-green-600 hover:bg-green-900"
+                      >
                         Update
-                      </Button> 
-                        ) 
-                      :
-                      (<Button disabled={loading} onClick={createNew} type="submit" className="w-full rounded-full bg-green-600 hover:bg-green-900"> 
-                      Add
-                    </Button> 
-                      )}
-
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-
-
-
-
+                      </Button>
+                    ) : (
+                      <Button
+                        disabled={loading}
+                        onClick={createNew}
+                        type="submit"
+                        className="w-full rounded-full bg-green-600 hover:bg-green-900"
+                      >
+                        Add
+                      </Button>
+                    )}
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
               <div>
                 {categories.map((category) => (
                   <div key={category.id} className="flex gap-1">
-                    <CategoryIcon123 iconName={category.icon} color={category.color}/>
+                    <CategoryIcon123
+                      iconName={category.icon}
+                      color={category.color}
+                    />
                     {category.name}
-                    <Button
-                      onClick={() => setEditingCategory(category)}
-                    >
+                    <Button onClick={() => setEditingCategory(category)}>
                       Edit
                     </Button>
                     <Button
-                      onClick={() => deleteCategoryName(category.id, category.name)}
+                      onClick={() =>
+                        deleteCategoryName(category.id, category.name)
+                      }
                     >
                       Del
                     </Button>
                   </div>
                 ))}
-      </div> 
+              </div>
             </div>
           </div>
           <div className="mx-3">
@@ -437,8 +371,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      
     </main>
   );
 }
