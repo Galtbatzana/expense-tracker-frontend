@@ -37,7 +37,7 @@ export function RecordsDialog() {
   const [addRecordsOpen, setaddRecordsOpen] = useState(false);
 
   // code oo deerees ni doosh unshih, sain oilgoh, console.log -oor shalgah, //
-
+ // useEffect oruulj 1 udaa // 
     useEffect(() => {
   if (create === "New") {
     setaddRecordsOpen(true);
