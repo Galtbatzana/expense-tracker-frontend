@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -33,9 +34,12 @@ export function RecordsDialog() {
   const [date, setDate] = useState();
   const searchParams = useSearchParams();
   const create = searchParams.get("create");
-
   const [addRecordsOpen, setaddRecordsOpen] = useState(false);
-
+  const [time, setTime] = useState();
+  // cosnt [selected, setSelected] = useState("EXPENSE");
+  // const expense = "EXPENSE";
+  // const income = "INCOME";
+  
   // code oo deerees ni doosh unshih, sain oilgoh, console.log -oor shalgah, //
  // useEffect oruulj 1 udaa // 
     useEffect(() => {
@@ -44,7 +48,7 @@ export function RecordsDialog() {
   }
     }, [create]);
 
-//   console.log(addRecordsOpen);
+  console.log(time);
 
   return (
     <div>
@@ -55,16 +59,16 @@ export function RecordsDialog() {
         >
           <DialogHeader>
             <DialogTitle>Add Records</DialogTitle>
+            <DialogDescription></DialogDescription>
           </DialogHeader>
           <div className="flex gap-4">
             <div className="flex flex-col flex-1 gap-4 m-4">
               <RadioGroup>
                 <div className="flex">
-                  <Button
+                  <Button onChange={()=>setSelected(expense)}
                     variant="secondary"
-                    className="bg-[#0166FF] text-white rounded-full px-4 w-full"
+                    className="bg-[#16A34A] text-white rounded-full px-4 w-full"
                   >
-                    INCOME
                   </Button>
                   <Button
                     variant="secondary"
@@ -92,14 +96,14 @@ export function RecordsDialog() {
                   <SelectItem value="system">System</SelectItem>
                 </SelectContent>
               </Select>
-              <div className="flex">
+              <div className="flex items-center justify-between">
                 <div>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-[280px] justify-start text-left font-normal",
+                          "w-44 justify-start text-left font-normal",
                           !date && "text-muted-foreground"
                         )}
                       >
@@ -133,7 +137,9 @@ export function RecordsDialog() {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <div>timePicker</div>
+                <div>
+                  <Input aria-label="Time" type="time" onChange={(event)=>setTime(event.target.value)} className="rounded-md border p-1.5"/>
+                </div>
               </div>
               <Button
                 variant="secondary"

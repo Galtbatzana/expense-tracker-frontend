@@ -28,6 +28,7 @@ import {
 import { Slider } from "@radix-ui/react-slider";
 import { useRouter } from "next/navigation";
 import { RecordsDialog } from "@/components/RecordsDialog";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -207,6 +208,8 @@ export default function Home() {
                 >
                   <DialogHeader>
                     <DialogTitle>Categories</DialogTitle>
+                    <DialogDescription></DialogDescription>
+                  
                   </DialogHeader>
                   <div className="flex gap-4">
                     <Popover>
@@ -241,6 +244,7 @@ export default function Home() {
                             </div>
                           ))}
                         </div>
+                    
                       </PopoverContent>
                     </Popover>
                     <Input
@@ -274,7 +278,7 @@ export default function Home() {
               </Dialog>
               <div>
                 {categories.map((category) => (
-                  <div key={category.id} className="flex gap-1">
+                  <div key={category.id} className="flex gap-1 items-center">
                     <CategoryIcon123
                       iconName={category.icon}
                       color={category.color}
