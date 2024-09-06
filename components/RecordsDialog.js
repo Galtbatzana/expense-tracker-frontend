@@ -36,19 +36,23 @@ export function RecordsDialog() {
   const create = searchParams.get("create");
   const [addRecordsOpen, setaddRecordsOpen] = useState(false);
   const [time, setTime] = useState();
+  const expense = "EXPENSE";
+  const income = "INCOME";
+  const [show, setShow] = useState("");
+
   // cosnt [selected, setSelected] = useState("EXPENSE");
   // const expense = "EXPENSE";
   // const income = "INCOME";
-  
-  // code oo deerees ni doosh unshih, sain oilgoh, console.log -oor shalgah, //
- // useEffect oruulj 1 udaa // 
-    useEffect(() => {
-  if (create === "New") {
-    setaddRecordsOpen(true);
-  }
-    }, [create]);
 
-  console.log(time);
+  // code oo deerees ni doosh unshih, sain oilgoh, console.log -oor shalgah, //
+  // useEffect oruulj 1 udaa //
+  useEffect(() => {
+    if (create === "New") {
+      setaddRecordsOpen(true);
+    }
+  }, [create]);
+
+  // console.log(time);
 
   return (
     <div>
@@ -65,14 +69,25 @@ export function RecordsDialog() {
             <div className="flex flex-col flex-1 gap-4 m-4">
               <RadioGroup>
                 <div className="flex">
-                  <Button onChange={()=>setSelected(expense)}
+                  <Button
+                    onClick={() => setShow(expense)}
                     variant="secondary"
-                    className="bg-[#16A34A] text-white rounded-full px-4 w-full"
+                    className={`${
+                      show === expense
+                        ? "bg-[#16A34A] text-white"
+                        : "bg-[#D1D5DB] text-white"
+                    } rounded-full px-4 w-full`}
                   >
+                    INCOME
                   </Button>
                   <Button
+                    onClick={() => setShow(income)}
                     variant="secondary"
-                    className="bg-[#0166FF] text-white rounded-full px-4 w-full"
+                    className={`${
+                      show === income
+                        ? "bg-[#0166FF] text-white"
+                        : "bg-[#D1D5DB] text-white"
+                    } rounded-full px-4 w-full`}
                   >
                     EXPENSE
                   </Button>
@@ -138,12 +153,22 @@ export function RecordsDialog() {
                   </Popover>
                 </div>
                 <div>
-                  <Input aria-label="Time" type="time" onChange={(event)=>setTime(event.target.value)} className="rounded-md border p-1.5"/>
+                  <Input
+                    aria-label="Time"
+                    type="time"
+                    onChange={(event) => setTime(event.target.value)}
+                    className="rounded-md border p-1.5"
+                  />
                 </div>
               </div>
               <Button
                 variant="secondary"
-                className="bg-[#0166FF] text-white rounded-full px-4 w-full"
+                className={`
+                  ${
+                    show === expense
+                      ? "bg-[#16A34A] text-white"
+                      : "bg-[#0166FF] text-white"
+                  } rounded-full px-4 w-full`}
               >
                 Add Records
               </Button>

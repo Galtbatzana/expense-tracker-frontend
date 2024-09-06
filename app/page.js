@@ -164,7 +164,7 @@ export default function Home() {
               >
                 + Add Category
               </Button>
-            <RecordsDialog />
+              <RecordsDialog />
             </div>
 
             <input
@@ -209,7 +209,6 @@ export default function Home() {
                   <DialogHeader>
                     <DialogTitle>Categories</DialogTitle>
                     <DialogDescription></DialogDescription>
-                  
                   </DialogHeader>
                   <div className="flex gap-4">
                     <Popover>
@@ -244,7 +243,6 @@ export default function Home() {
                             </div>
                           ))}
                         </div>
-                    
                       </PopoverContent>
                     </Popover>
                     <Input
@@ -276,24 +274,33 @@ export default function Home() {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              <div>
+              <div className="flex flex-col gap-2">
                 {categories.map((category) => (
-                  <div key={category.id} className="flex gap-1 items-center">
-                    <CategoryIcon123
-                      iconName={category.icon}
-                      color={category.color}
-                    />
-                    {category.name}
-                    <Button onClick={() => setEditingCategory(category)}>
-                      Edit
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        deleteCategoryName(category.id, category.name)
-                      }
-                    >
-                      Del
-                    </Button>
+                  <div
+                    key={category.id}
+                    className="flex justify-between items-center"
+                  >
+                    {" "}
+                    <div className="flex gap-2">
+                      <CategoryIcon123
+                        iconName={category.icon}
+                        color={category.color}
+                      />
+                      {category.name}
+                    </div>
+                    <div className="flex gap-1">
+                      <Button onClick={() => setEditingCategory(category)}>
+                        Edit
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        onClick={() =>
+                          deleteCategoryName(category.id, category.name)
+                        }
+                      >
+                        Del
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
