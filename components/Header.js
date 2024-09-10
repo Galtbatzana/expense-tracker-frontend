@@ -1,6 +1,6 @@
 import { Button } from "./ui/button"
 import { useRouter } from "next/navigation";
-
+import { UserButton } from '@clerk/nextjs';
 
 export const Header = () => {
     const router = useRouter();
@@ -16,7 +16,7 @@ export const Header = () => {
                     <Button onClick={()=>router.push(`?create=New`)} variant="secondary" className="bg-[#0166FF] text-white rounded-full px-4 w-full mr-6">
                         + Add Record
                     </Button>
-                    <img src="../images/Placeholder.png"></img>
+                    <UserButton />
                 </div>
             </div>
         </div>
