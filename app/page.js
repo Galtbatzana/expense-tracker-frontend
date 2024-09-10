@@ -29,6 +29,7 @@ import { Slider } from "@radix-ui/react-slider";
 import { useRouter } from "next/navigation";
 import { RecordsDialog } from "@/components/RecordsDialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import Dashboard from "@/components/ Dashboard";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -382,6 +383,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <Dashboard />          
+
     </main>
   );
 }
