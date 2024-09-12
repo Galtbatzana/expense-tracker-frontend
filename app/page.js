@@ -30,6 +30,8 @@ import { useRouter } from "next/navigation";
 import { RecordsDialog } from "@/components/RecordsDialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import Dashboard from "@/components/ Dashboard";
+import { Chart } from "@/components/Chart";
+import { BarChart, BarChart1 } from "@/components/BarChart";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -384,8 +386,9 @@ export default function Home() {
         </div>
       </div>
 
-      <Dashboard />          
-
+      <Dashboard />
+      <Chart />
+      <BarChart1 />
     </main>
   );
 }
