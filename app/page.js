@@ -29,9 +29,7 @@ import { Slider } from "@radix-ui/react-slider";
 import { useRouter } from "next/navigation";
 import { RecordsDialog } from "@/components/RecordsDialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
-import Dashboard from "@/components/ Dashboard";
-import { Chart } from "@/components/Chart";
-import { BarChart, BarChart1 } from "@/components/BarChart";
+import Dashboard from "@/app/Dashboard/page";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -385,10 +383,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <Dashboard />
-      <Chart />
-      <BarChart1 />
     </main>
   );
 }

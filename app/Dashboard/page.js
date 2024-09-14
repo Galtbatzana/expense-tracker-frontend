@@ -1,15 +1,9 @@
-import { House } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
-
-
 // import { ChartPie } from "./Chart";
 // import { BarChart } from "./BarChart";
 
+import { BarChart1 } from "@/components/BarChart";
 
-export default function Dashboard() {
-  
-
-
+function Dashboard() {
   return (
     <div className="container mx-auto flex flex-col bg-[#F3F4F6] max-w-[1440px ">
       <div className="flex gap-6">
@@ -32,31 +26,10 @@ export default function Dashboard() {
           <p>Your income amount</p>
           <p>32% from last month</p>
         </div>
-      
       </div>
 
-      <div>
-       BarChart
-       PieChart
-      </div>
-
-      <div>
-        <p>Last Records</p>
-        <div className="flex items-center justify-between bg-white rounded-lg">
-                <div className="flex items-center py-3 pl-6">
-                  <Checkbox className="mr-2" />
-                  <div className="m-2 w-8 h-8 rounded-full">
-                    <House />
-                  </div>
-                  <div>
-                    <p>Lending & Renting</p>
-                    <p className="text-[12px]">14:00</p>
-                  </div>
-                </div>
-                <p className="mr-6">1.000$</p>
-        </div>
-      </div>
-
+      <BarChart1 />
     </div>
   );
 }
+export default Dashboard;
