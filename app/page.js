@@ -29,7 +29,6 @@ import { Slider } from "@radix-ui/react-slider";
 import { useRouter } from "next/navigation";
 import { RecordsDialog } from "@/components/RecordsDialog";
 import { DialogDescription } from "@radix-ui/react-dialog";
-import Dashboard from "@/app/Dashboard/page";
 
 export default function Home() {
   const [categories, setCategories] = useState([]);
@@ -339,19 +338,27 @@ export default function Home() {
                 <p className="pr-6">35.500$</p>
               </div>
               <p>Today</p>
-              <div className="flex items-center justify-between bg-white rounded-lg">
-                <div className="flex items-center py-3 pl-6">
-                  <Checkbox className="mr-2" />
-                  <div className="m-2 w-8 h-8 rounded-full">
-                    <House />
+              <div>
+                {transaction.map((transaction) => (
+                  <div
+                    key={transaction}
+                    className="flex items-center justify-between bg-white rounded-lg"
+                  >
+                    <div className="flex items-center py-3 pl-6">
+                      <Checkbox className="mr-2" />
+                      <div className="m-2 w-8 h-8 rounded-full">
+                        <House />
+                      </div>
+                      <div>
+                        <p>Lending & Renting</p>
+                        <p className="text-[12px]">{transaction.date}</p>
+                      </div>
+                    </div>
+                    <p className="pr-6">{transaction.amount}</p>
                   </div>
-                  <div>
-                    <p>Lending & Renting</p>
-                    <p className="text-[12px]">14:00</p>
-                  </div>
-                </div>
-                <p className="pr-6">1.000$</p>
+                ))}
               </div>
+
               <div className="flex items-center justify-between bg-white rounded-lg">
                 <div className="flex items-center py-3 pl-6">
                   <Checkbox className="mr-2" />
