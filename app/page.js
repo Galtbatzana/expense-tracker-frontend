@@ -338,7 +338,7 @@ export default function Home() {
                 <p className="pr-6">35.500$</p>
               </div>
               <p>Today</p>
-              <div>
+              {/* <div>
                 {transaction.map((transaction) => (
                   <div
                     key={transaction}
@@ -357,7 +357,7 @@ export default function Home() {
                     <p className="pr-6">{transaction.amount}</p>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               <div className="flex items-center justify-between bg-white rounded-lg">
                 <div className="flex items-center py-3 pl-6">

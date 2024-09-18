@@ -39,7 +39,11 @@ export function RecordsDialog() {
   const expense = "EXPENSE";
   const income = "INCOME";
   const [show, setShow] = useState("");
+  const [transAction, setTransAction] = useState();
 
+  function createTransaction () {
+    
+  } 
   // cosnt [selected, setSelected] = useState("EXPENSE");
   // const expense = "EXPENSE";
   // const income = "INCOME";
@@ -161,7 +165,7 @@ export function RecordsDialog() {
                   />
                 </div>
               </div>
-              <Button
+              <Button onClick={createTransaction()}
                 variant="secondary"
                 className={`
                   ${
